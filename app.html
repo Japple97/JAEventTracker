@@ -67,10 +67,62 @@
         </nav>
     </header>
 
-    <main class="content container">
-        <h1>APP UI GOES HERE</h1>
-        <input id="message" placeholder="Enter a Message..." type="text">
-        <button class="btn btn-primary" type="button" id="btnSubmit">Display a Message</button>
+    <main class="content container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <!--dropdown and stats-->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary">Pick a location</button>
+                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" id="eventDropDown">
+                       <!-- <li><a class="dropdown-item" href="#">Action</a></li> -->
+                    </ul>
+                </div>
+                <table class="table table-striped">
+                    <tr>
+                        <th colspan="2">Stats for All Events</th>
+                    </tr>
+                    <tr>
+                        <td>Total Attendance</td>
+                        <td id="total">100</td>
+                    </tr>
+                    <tr>
+                        <td>Average Attendance</td>
+                        <td id="average">100</td>
+                    </tr>
+                    <tr>
+                        <td>Most Attended</td>
+                        <td id="most">100</td>
+                    </tr>
+                    <tr>
+                        <td>Least Attended</td>
+                        <td id="least">100</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6 order-first order-md-last">
+                <img src="/img/eventful_500.png" class="img-fluid p-3" />
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Event Name</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Attendance</th>
+                        <th>Event Date</th>
+                    </tr>
+                </thead>
+                <tbody id="eventTableBody">
+                    <!--Table Template goes here-->
+                </tbody>
+            </table>
+        </div>
     </main>
 
 
@@ -94,6 +146,24 @@
         </div>
     </footer>
 
+    <!--Dropdown menu item template-->
+    <template id="dropdownItemTemplate">
+        <li>
+            <a class="dropdown-item" onclick="getEvents(this)"></a>
+        </li>
+    </template>
+
+    <!--table row template-->
+    <template id="eventTableRowTemplate">
+        <tr>
+            <td data-id="event"></td>
+            <td data-id="city"></td>
+            <td data-id="state"></td>
+            <td data-id="attendance"></td>
+            <td data-id="eventDate"></td>
+        </tr>
+    </template>
+
     <!--Bootstrap Script-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
@@ -105,8 +175,10 @@
     <script src="/js/site.js"></script>
     <!--Alert JS-->
     <script>
-        document.getElementById('btnSubmit').addEventListener('click', displayMessage);
+       buildDropDown();
     </script>
+
+    
 </body>
 
 
