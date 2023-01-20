@@ -70,7 +70,7 @@ function buildDropDown() {
     dropdownMenu.innerHTML = '';
 
     //get our events
-    let currEvents = events;
+    let currEvents = getEventData();
 
     //put out JUST the city names
     let eventCities = currEvents.map((event) => event.city);
@@ -123,48 +123,6 @@ function displayStats(eventsArray) {
 
 }
 
-function calculateTotal(eventsArray) {
-    let sum = 0;
-
-    for (let index = 0; index < eventsArray.length; index++) {
-        let currentEvent = eventsArray[index];
-        sum = sum + currentEvent.attendance;
-    }
-
-    return sum;
-
-}
-
-function calculateAverage(eventsArray) {
-    let total = calculateTotal(eventsArray);
-    let average = total / eventsArray.length;
-    return average;
-}
-
-function calculateMostAttended(eventsArray) {
-    let max = eventsArray[0].attendance;
-
-    for (let index = 0; index < eventsArray.length; index++) {
-        let currentEvent = eventsArray[index];
-        if (currentEvent.attendance > max) {
-            max = currentEvent.attendance;
-        }
-    }
-    return max;
-}
-
-function calculateLeastAttended(eventsArray) {
-    let min = eventsArray[0].attendance;
-
-    for (let index = 0; index < eventsArray.length; index++) {
-        let currentEvent = eventsArray[index];
-        if (currentEvent.attendance < min) {
-            min = currentEvent.attendance;
-        }
-    }
-    return min;
-}
-
 function calculateStats(eventsArray) {
     sum = 0;
     average = 0;
@@ -214,4 +172,68 @@ function displayEventData(eventsArray) {
 
         tableBody.appendChild(eventRow);
     }
+}
+
+function getEventData() {
+    let currentEvents = JSON.parse(localStorage.getItem('ja-eventData'));
+
+    if (currentEvents == null) {
+        currentEvents = events;
+        localStorage.setItem('ja-eventData', JSON.stringify(currentEvents));
+    }
+    return currentEvents;
+}
+
+function getEvents(element) {
+    let currentEvents = getEventData();
+    let cityName = element.getAttribute('data-string');
+
+    let filteredEvents = currentEvents;
+
+    if (cityName != 'All') {
+         filteredEvents = currentEvents.filter(
+            function(event) {
+                if (cityName == event.city) {
+                    return event;
+                }
+            }
+         );
+    }
+    document.getElementById('statsHeader').textContent = cityName;
+    displayStats(filteredEvents);
+    displayEventData(filteredEvents);
+}
+
+function saveEventData(){
+    let eventName = document.getElementById('newEventName').value;
+    let cityName = document.getElementById('newEventCity').value;
+    let eventAttendance = parseInt(document.getElementById('newEventAttendance').value);
+    let eventDate = document.getElementById('newEventDate').value;
+
+    eventDate = `${eventDate} 00:00`;
+    eventDate = new Date(eventDate).toLocaleDateString();
+
+    let selectState = document.getElementById('newEventState');
+    let state = selectState.options[selectState.selectedIndex].text;
+
+    let newEvent = {
+        event: eventName,
+        city: cityName,
+        state: state,
+        attendance: eventAttendance,
+        date: eventDate
+    };
+
+    let currentEvents = getEventData();
+    currentEvents.push(newEvent);
+
+
+    localStorage.setItem('ja-eventData', JSON.stringify(currentEvents));
+
+
+    //update the page
+    buildDropDown();
+    document.getElementById('statsHeader').textContent = 'All';
+    document.getElementById('newEventForm').reset();
+
 }
