@@ -191,20 +191,20 @@ function getEvents(element) {
     let filteredEvents = currentEvents;
 
     if (cityName != 'All') {
-         filteredEvents = currentEvents.filter(
-            function(event) {
+        filteredEvents = currentEvents.filter(
+            function (event) {
                 if (cityName == event.city) {
                     return event;
                 }
             }
-         );
+        );
     }
     document.getElementById('statsHeader').textContent = cityName;
     displayStats(filteredEvents);
     displayEventData(filteredEvents);
 }
 
-function saveEventData(){
+function saveEventData() {
     let eventName = document.getElementById('newEventName').value;
     let cityName = document.getElementById('newEventCity').value;
     let eventAttendance = parseInt(document.getElementById('newEventAttendance').value);
