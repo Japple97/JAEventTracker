@@ -76,45 +76,45 @@
                 <pre class="line-numbers">
                     <code class="language-js">
                         function buildDropDown() {
-                        //get the dropdown menu from the page
-                        let dropdownMenu = document.getElementById('eventDropDown');
-                        // empty the innetHTML to ensure its clean
-                        dropdownMenu.innerHTML = '';
+//get the dropdown menu from the page
+let dropdownMenu = document.getElementById('eventDropDown');
+// empty the innetHTML to ensure its clean
+dropdownMenu.innerHTML = '';
                         
-                        //get our events
-                        let currEvents = getEventData();
+//get our events
+let currEvents = getEventData();
                         
-                        //put out JUST the city names
-                        let eventCities = currEvents.map((event) => event.city);
-                        //filter the cities to only DISTINCT city names
-                        let disctinctCities = [...new Set(eventCities)];
+//put out JUST the city names
+let eventCities = currEvents.map((event) => event.city);
+ //filter the cities to only DISTINCT city names
+let disctinctCities = [...new Set(eventCities)];
                         
-                        //get the template from the page
-                        const template = document.getElementById('dropdownItemTemplate');
+//get the template from the page
+const template = document.getElementById('dropdownItemTemplate');
                         
-                        //copy the template
-                        let dropdownTemplateNode = document.importNode(template.content, true);
+//copy the template
+let dropdownTemplateNode = document.importNode(template.content, true);
                         
-                        //get the a tag from the template copy
-                            let menuItem = dropdownTemplateNode.querySelector('a');
+//get the a tag from the template copy
+let menuItem = dropdownTemplateNode.querySelector('a');
                         
-                            //change the text
-                            menuItem.textContent = 'All Cities';
-                            menuItem.setAttribute('data-string', "All");
+//change the text
+menuItem.textContent = 'All Cities';
+menuItem.setAttribute('data-string', "All");
                         
-                            //add item to the page
-                            dropdownMenu.appendChild(dropdownTemplateNode);
+//add item to the page
+dropdownMenu.appendChild(dropdownTemplateNode);
                         
-                        for (let index = 0; index < disctinctCities.length; index++) { 
-                            let cityMenuItem=document.importNode(template.content, true); 
-                            let cityButton=cityMenuItem.querySelector('a'); 
+    for (let index = 0; index < disctinctCities.length; index++) { 
+        let cityMenuItem=document.importNode(template.content, true); 
+        let cityButton=cityMenuItem.querySelector('a'); 
                             
-                            cityButton.textContent=disctinctCities[index];
-                            cityButton.setAttribute("data-string", disctinctCities[index]);
+        cityButton.textContent=disctinctCities[index];
+        cityButton.setAttribute("data-string", disctinctCities[index]);
                             
-                            dropdownMenu.appendChild(cityMenuItem);
-                         }
-                         displayStats(currEvents);
+            dropdownMenu.appendChild(cityMenuItem);
+            }
+         displayStats(currEvents);
     displayEventData(currEvents);
    }
 function displayStats(eventsArray) {
@@ -123,7 +123,7 @@ function displayStats(eventsArray) {
     //Do some math
 
     document.getElementById('total').textContent = stats.total.toLocaleString();
-    document.getElementById('average').textContent = stats.averageAttendance.toLocaleString(
+document.getElementById('average').textContent = stats.averageAttendance.toLocaleString(
         "en-US", {
         maximumFractionDigits: 0,
         minimumFractionDigits: 0
